@@ -39,6 +39,5 @@ fclose($fh);
 <h1>Thanks</h1>
 
 Your comment has been posted.
-<a href="/commentor/index.php">Go Back</a>
 </body>
 </html>
