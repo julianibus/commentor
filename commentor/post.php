@@ -38,7 +38,7 @@ fclose($fh);
 <body>
 <h1>Thanks</h1>
 
-You comment has been posted.
-<a href="javascript:history.back()">Go Back</a>
+Your comment has been posted.
+<a href="/commentor/index.php">Go Back</a>
 </body>
 </html>
