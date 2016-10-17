@@ -1,17 +1,20 @@
 <?php 
+$conf = parse_ini_file('config',1);
+$datafolder = $conf["datafolder"];
+
+
 #retrieve data
-$caller = $_SERVER['HTTP_REFERER'];
+$caller = $_GET['ref'];
 $msg = $_POST['message'];
 $name = $_POST['name'];
 $email = $_POST['email'];
 
-$date = date();
-$datestamp = (string) date_format($date, 'Y-m-d H:i:s');
+$datestamp = date("D M d, Y G:i");
 
-$code = $datestamp . "," . $name . "," . $msg;
+$code = $datestamp . "#" . $name . "#" . $msg  . "#" . $email;
 #spam protection
 if(isset($_POST['url']) && $_POST['url'] == ''){
-	$filename = "../commentor/data/" . urlencode($caller) . ".txt";
+	$filename = $datafolder .  "/" . urlencode($caller) . ".txt";
 	if (file_exists($filename)) {
 		$fh = fopen($filename, 'a');
 		fwrite($fh, $code."\n");
