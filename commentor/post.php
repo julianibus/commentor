@@ -1,4 +1,5 @@
 <?php 
+error_reporting(E_ERROR | E_PARSE);
 $conf = parse_ini_file('config',1);
 $datafolder = $conf["datafolder"];
 
@@ -27,6 +28,20 @@ if(strlen($msg) < 1){
 	$errmessage .= "Please provide a message.<br>";
 }
 
+if (strpos($name, '#') == True) {
+	$success = False;
+	$errmessage .= "Your name contains invalid characters.<br>";
+}
+if (preg_match("^([0-9,a-z,A-Z]+)([.,_]([0-9,a-z,A-Z]+))*[@]([0-9,a-z,A-Z]+)([.,_,-]([0-9,a-z,A-Z]+))*[.]([0-9,a-z,A-Z]){2}([0-9,a-z,A-Z])?$", $email)) {
+	$success = False;
+	$errmessage .= "Your email appears to be invalid.<br>";
+}
+	
+if (strpos($msg, '#') == True) {
+	$success = False;
+	$errmessage .= "Your message contains invalid characters.<br>";
+}
+
 $errmessage = "<font color='red'>" . $errmessage . "</font><br><br><a href='/commentor/index.php?ref=" . $caller . "'>Go back</a>";
 
 #spam protection
@@ -41,7 +56,7 @@ if(isset($_POST['url']) && $_POST['url'] == '' && $success == True){
 	}
 fclose($fh);
           
-} 
+}
 ?>
 <html>
 <head>
@@ -55,7 +70,7 @@ fclose($fh);
 <body>
 <?php
 if ($success == True) {
-	echo "<h1>Thanks</h1>Your comment has been posted.";
+	echo "<h1>Thanks</h1>Your comment has been posted.<br><br><a href='/commentor/index.php?ref=" . $caller . "'>Show comments</a>";
 }
 else {
 	echo $errmessage;	
