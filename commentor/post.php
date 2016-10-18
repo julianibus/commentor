@@ -14,15 +14,19 @@ $email = $_POST['email'];
 $datestamp = date("D M d, Y G:i");
 $code = $datestamp . "#" . $name . "#" . $msg  . "#" . $email;
 #form validation
-if(empty($msg) || $msg = null){
-	$success = False;
-	$errmessage = $errmessage . "Please provide a message.<br>";
-}
+
+
 if(empty($name)){
 	$success = False;
-	$errmessage = $errmessage . "Please provide a name.<br>";
+	$errmessage .= "Please provide a name.<br>";
 }
-$errmessage = "<font color='red'" . $errmessage . "</font><br><br><a href='/commentor/index.php?ref=" . $caller . "'>Go back</a>";
+
+if(strlen($msg) < 1){
+	$success = False;
+	$errmessage .= "Please provide a message.<br>";
+}
+
+$errmessage = "<font color='red'>" . $errmessage . "</font><br><br><a href='/commentor/index.php?ref=" . $caller . "'>Go back</a>";
 
 #spam protection
 if(isset($_POST['url']) && $_POST['url'] == '' && $success == True){
