@@ -1,5 +1,8 @@
 <?php
 $caller = $_SERVER['HTTP_REFERER'];
+if (empty($_GET["ref"] == False)){
+	$caller = $_GET["ref"];
+}
 error_reporting(E_ERROR | E_PARSE);
 ?>
 
@@ -11,10 +14,13 @@ error_reporting(E_ERROR | E_PARSE);
 <style>
 .antispam { display:none;}
 </style>
+
 </head>
+
+
 <body>
 <?php echo '<form action="/commentor/post.php?ref=' . $caller . '" method="post">';  ?>
-<form action="/commentor/post.php" method="post">
+<form action="/commentor/post.php" method="post" name="form1">
 
     <p><input type="text" name="name" style="width: 24%;" placeholder="name"/><input style="width: 24%;" type="text" name="email" placeholder="email (not visible)"/></p>
 
@@ -33,7 +39,6 @@ $conf = parse_ini_file('config',1);
 $datafolder = $conf["datafolder"];
 $maxcomments = $conf["maxcomments"];
 
-$caller = $_SERVER['HTTP_REFERER'];
 $filename = $datafolder . "/" . urlencode($caller) . ".txt";
 
 #read file backwards
@@ -74,4 +79,3 @@ echo $out;
 ?>
 </body>
 </html>
-
