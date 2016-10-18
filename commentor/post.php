@@ -12,7 +12,8 @@ $msg = $_POST['message'];
 $name = $_POST['name'];
 $email = $_POST['email'];
 $datestamp = date("D M d, Y G:i");
-$code = $datestamp . "#" . $name . "#" . $msg  . "#" . $email;
+$id =  time();
+$code = $datestamp . "#" . $name . "#" . $msg  . "#" . $email . "#" . $id;
 #form validation
 
 
