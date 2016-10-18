@@ -16,7 +16,8 @@ foreach($files as $file) {
 		continue;
 	}
 	$fileo = file($datafolder . "/" .$file);
-	echo "<br><br><b>Page: <a href='" . urldecode($file) . "'>" . urldecode($file) . "</a></b>";
+	$realurl = urldecode(pathinfo($file, PATHINFO_FILENAME));
+	echo "<br><br><b>Page: <a href='" . $realurl . "'>" . $realurl . "</a></b>";
 	$fileo = array_reverse($fileo);
 	
 	foreach($fileo as $f){
@@ -26,9 +27,9 @@ foreach($files as $file) {
 	    $name = $info[1];
 	    $message = $info[2];
 	    $email = $info[3];
-	    
-	    $buttons = "<br><a href='delete.php?code='" . $code . "'>DEL</a>&nbsp;&nbsp; | &nbsp;&nbsp;";
-	    echo $buttons . $datestamp . "&nbsp;&nbsp;" . $name . "&nbsp;&nbsp;" . $email . "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>" . $message ."</i>";
+	    $id= $info[4];
+	    $buttons = "<br><a href='delete.php?code='" . $id . "'>DEL</a>&nbsp;&nbsp; | &nbsp;&nbsp;";
+	    echo $buttons . $datestamp . "&nbsp;&nbsp;" . $name . "&nbsp;&nbsp;" . $email . "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>" . $message ."</i>";
 	    
 	}
 }
