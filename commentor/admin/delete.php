@@ -2,32 +2,43 @@
 <head>
 <link rel="stylesheet" href="../template.css">
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-
 </head>
 <body>
 <h1>Commentor</h1>
 <?php
+if (isset($_GET['idnr'])) { 
+	$code = $_GET['idnr']; 
+} else { 
+	$code = "0"; 
+} 
+echo "Marked for removal: " . $code . "<br><br>";
+
 $conf = parse_ini_file('../config',1);
 $datafolder = "../" . $conf["datafolder"];
 
 $files = scandir($datafolder);
+
+$counter = 0;
+
 foreach($files as $file) {
 	if ($file == "." || $file == "..") {
 		continue;
 	}
 	$path = $datafolder . "/" .$file;
+	
 	if ( 0 == filesize( $path ) )
 	{
 		continue;
 	}
+	
+	
 	$fileo = file($path);
-	$realurl = urldecode(pathinfo($file, PATHINFO_FILENAME));
-	echo "<br><br><b>Page: <a href='" . $realurl . "'>" . $realurl . "</a></b>";
 	$fileo = array_reverse($fileo);
-	$commentscounter = 0;
+	
+	$cleanedcontent = "";
+	$scounter = 0;
 	foreach($fileo as $f){
-		$commentscounter += 1;
-		
+		$scounter += 1;
 	    $info = explode("#",$f);
 	    
 	    $datestamp = $info[0];
@@ -35,13 +46,29 @@ foreach($files as $file) {
 	    $message = $info[2];
 	    $email = $info[3];
 	    $id = $info[4];
-	    $buttons = '<br><a href="delete.php?idnr=' . $id . '&">DEL</a>&nbsp;&nbsp; | &nbsp;&nbsp;';
-	    echo $buttons . $datestamp . "&nbsp;&nbsp;" . $name . "&nbsp;&nbsp;" . $email . "&nbsp;&nbsp;" . $id .  "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>" . $message ."</i>";
+	    
+	    if ($f == ""){ #if empty line
+			continue;
+		}
+	    if (trim($id) == trim($code)){ #if match
+			$counter = $counter + 1;
+			continue;
+		}
+		
+		if ($scounter != 1) {
+			$cleancontent .= "\n";
+		}
+		$cleanedcontent = $cleanedcontent . $f;
 	    
 	}
-	echo "<br><br>(" . (string) $commentscounter . " comments)";
+	
+	file_put_contents($path,$cleanedcontent);
+	
+	
 }
 
+echo (string) $counter . " comment deleted.";
+echo "<br><br><a href='/commentor/admin'>Back</a>";
 
 ?>
 
