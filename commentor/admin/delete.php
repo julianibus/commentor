@@ -46,6 +46,7 @@ foreach($files as $file) {
 	    $message = $info[2];
 	    $email = $info[3];
 	    $id = $info[4];
+	    $ip = $info[5];
 	    
 	    if ($f == ""){ #if empty line
 			continue;

@@ -1,4 +1,25 @@
 <?php 
+
+function get_client_ip_env() {
+    $ipaddress = '';
+    if (getenv('HTTP_CLIENT_IP'))
+        $ipaddress = getenv('HTTP_CLIENT_IP');
+    else if(getenv('HTTP_X_FORWARDED_FOR'))
+        $ipaddress = getenv('HTTP_X_FORWARDED_FOR');
+    else if(getenv('HTTP_X_FORWARDED'))
+        $ipaddress = getenv('HTTP_X_FORWARDED');
+    else if(getenv('HTTP_FORWARDED_FOR'))
+        $ipaddress = getenv('HTTP_FORWARDED_FOR');
+    else if(getenv('HTTP_FORWARDED'))
+        $ipaddress = getenv('HTTP_FORWARDED');
+    else if(getenv('REMOTE_ADDR'))
+        $ipaddress = getenv('REMOTE_ADDR');
+    else
+        $ipaddress = 'UNKNOWN';
+ 
+    return $ipaddress;
+}
+
 error_reporting(E_ERROR | E_PARSE);
 $conf = parse_ini_file('config',1);
 $datafolder = $conf["datafolder"];
@@ -14,7 +35,8 @@ $name = $_POST['name'];
 $email = $_POST['email'];
 $datestamp = date("D M d, Y G:i");
 $id =  time();
-$code = $datestamp . "#" . $name . "#" . $msg  . "#" . $email . "#" . $id;
+$ip = get_client_ip_env();
+$code = $datestamp . "#" . $name . "#" . $msg  . "#" . $email . "#" . $id . "#" . $ip;
 #form validation
 
 

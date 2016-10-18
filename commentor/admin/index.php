@@ -46,8 +46,9 @@ foreach($files as $file) {
 	    $message = $info[2];
 	    $email = $info[3];
 	    $id = $info[4];
+		$ip = $info[5];
 	    $buttons = '<br><a href="delete.php?idnr=' . $id . '&">DEL</a>&nbsp;&nbsp; | &nbsp;&nbsp;';
-	    echo $buttons . $datestamp . "&nbsp;&nbsp;" . $name . "&nbsp;&nbsp;" . $email . "&nbsp;&nbsp;" . $id .  "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>" . $message ."</i>";
+	    echo $buttons . $datestamp . "&nbsp;&nbsp;" . $name . "&nbsp;&nbsp;" . $email . "&nbsp;&nbsp;" . $id . "&nbsp;&nbsp;" . $ip .   "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>" . $message ."</i>";
 	    
 	}
 	echo "<br><br>(" . (string) $commentscounter . " comments)";
